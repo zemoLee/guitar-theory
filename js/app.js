@@ -30,6 +30,18 @@ class App {
     const sidebar = document.getElementById('sidebar');
     sidebar.innerHTML = '';
 
+    // Donate item at the very top
+    const donateItem = document.createElement('a');
+    donateItem.className = 'sidebar__item sidebar__item--donate';
+    donateItem.href = '#';
+    donateItem.innerHTML = `<span class="sidebar__item-num" style="background:var(--color-accent);color:#000;">&#9829;</span><span>打赏作者</span>`;
+    donateItem.addEventListener('click', (e) => {
+      e.preventDefault();
+      const overlay = document.getElementById('donate-modal-overlay');
+      if (overlay) overlay.classList.add('modal-overlay--active');
+    });
+    sidebar.appendChild(donateItem);
+
     for (const phase of PHASES) {
       const phaseEl = document.createElement('div');
       phaseEl.className = 'sidebar__phase';
