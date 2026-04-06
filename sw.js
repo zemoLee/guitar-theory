@@ -1,5 +1,5 @@
 // Service Worker for offline caching
-const CACHE_NAME = 'guitar-theory-v1';
+const CACHE_NAME = 'guitar-theory-v2';
 
 const ASSETS = [
   './',
@@ -19,6 +19,9 @@ const ASSETS = [
   './js/data/chords.js',
   './js/data/scales.js',
   './js/data/theory.js',
+  './wx_qrcode_image.png',
+  './icon-192.png',
+  './icon-512.png',
 ];
 
 // Install: cache all assets

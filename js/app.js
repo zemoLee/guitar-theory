@@ -420,6 +420,27 @@ class App {
         }
       });
     }
+
+    // Donate modal
+    const donateBtn = document.getElementById('donate-btn');
+    const donateOverlay = document.getElementById('donate-modal-overlay');
+    const donateClose = document.getElementById('donate-modal-close');
+
+    if (donateBtn && donateOverlay) {
+      donateBtn.addEventListener('click', () => {
+        donateOverlay.classList.add('modal-overlay--active');
+      });
+    }
+    if (donateClose && donateOverlay) {
+      donateClose.addEventListener('click', () => {
+        donateOverlay.classList.remove('modal-overlay--active');
+      });
+      donateOverlay.addEventListener('click', (e) => {
+        if (e.target === donateOverlay) {
+          donateOverlay.classList.remove('modal-overlay--active');
+        }
+      });
+    }
   }
 }
 
