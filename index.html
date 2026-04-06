@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吉他乐理学习</title>
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/chord-diagram.css">
+  <link rel="stylesheet" href="css/circle-of-fifths.css">
+  <link rel="stylesheet" href="css/tuner.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu">&#9776;</button>
+        <div class="header__title">
+          <span class="header__title-icon">🎸</span>
+          吉他乐理学习
+        </div>
+      </div>
+      <div class="header__actions">
+        <div class="header__progress">
+          <span id="progress-text">0/21</span>
+          <div class="progress-bar">
+            <div class="progress-bar__fill" id="progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+        <button class="btn btn--ghost" id="global-mode-toggle" title="切换音名/唱名显示" style="font-size:0.75rem;padding:4px 10px;">
+          音名
+        </button>
+        <button class="btn btn--ghost btn--icon" id="cof-modal-btn" title="打开五度圈">
+          &#9673;
+        </button>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+      <!-- Populated by JS -->
+    </nav>
+
+    <!-- Content -->
+    <main class="content" id="content">
+      <!-- Populated by JS -->
+    </main>
+  </div>
+
+  <!-- Circle of Fifths Modal -->
+  <div class="modal-overlay" id="cof-modal-overlay">
+    <div class="modal">
+      <button class="modal__close" id="cof-modal-close">&times;</button>
+      <h2 style="color:var(--color-text-heading);margin-bottom:16px;">五度圈工具</h2>
+      <div id="cof-modal-body"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
+</body>
+</html>

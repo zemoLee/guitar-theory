@@ -1,0 +1,241 @@
+/* === Guitar Tuner === */
+.tuner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* String selector */
+.tuner__strings {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tuner__string-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 14px;
+  background: var(--bg-card);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-dim);
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-main);
+  min-width: 56px;
+}
+
+.tuner__string-btn:hover {
+  border-color: var(--color-text-dim);
+  color: var(--color-text);
+}
+
+.tuner__string-btn--active,
+.tuner__string-btn--detected {
+  border-color: var(--color-primary);
+  color: var(--color-text-heading);
+  background: rgba(233, 69, 96, 0.1);
+}
+
+.tuner__string-num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  opacity: 0.6;
+}
+
+.tuner__string-note {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Gauge */
+.tuner__gauge {
+  position: relative;
+  height: 80px;
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+/* Color zones */
+.tuner__zones {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.tuner__zone {
+  flex: 1;
+}
+
+.tuner__zone--red-left {
+  background: linear-gradient(90deg, rgba(233, 69, 96, 0.15), rgba(233, 69, 96, 0.05));
+}
+
+.tuner__zone--yellow-left {
+  background: rgba(245, 197, 24, 0.06);
+}
+
+.tuner__zone--green {
+  background: rgba(76, 175, 80, 0.12);
+  border-left: 1px solid rgba(76, 175, 80, 0.3);
+  border-right: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.tuner__zone--yellow-right {
+  background: rgba(245, 197, 24, 0.06);
+}
+
+.tuner__zone--red-right {
+  background: linear-gradient(90deg, rgba(233, 69, 96, 0.05), rgba(233, 69, 96, 0.15));
+}
+
+/* Scale markings */
+.tuner__scale {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.tuner__scale-mark {
+  position: absolute;
+  top: 0;
+  width: 1px;
+  height: 12px;
+  background: var(--color-border);
+  transform: translateX(-50%);
+}
+
+.tuner__scale-mark--major {
+  height: 20px;
+  background: var(--color-text-dim);
+}
+
+.tuner__scale-mark--center {
+  height: 100%;
+  background: rgba(76, 175, 80, 0.5);
+  width: 2px;
+}
+
+.tuner__scale-label {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.65rem;
+  color: var(--color-text-dim);
+  white-space: nowrap;
+}
+
+/* Needle */
+.tuner__needle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  background: var(--color-text-heading);
+  transform: translateX(-50%);
+  transition: left 0.15s ease-out;
+  z-index: 5;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.tuner__needle--green {
+  background: #4caf50;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.6);
+}
+
+.tuner__needle--yellow {
+  background: #f5c518;
+  box-shadow: 0 0 12px rgba(245, 197, 24, 0.6);
+}
+
+.tuner__needle--red {
+  background: #e94560;
+  box-shadow: 0 0 12px rgba(233, 69, 96, 0.6);
+}
+
+/* Info display */
+.tuner__info {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.tuner__note {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-text-heading);
+  line-height: 1.2;
+}
+
+.tuner__freq {
+  font-size: 1rem;
+  color: var(--color-text-dim);
+  font-family: var(--font-mono);
+  margin-bottom: 4px;
+}
+
+.tuner__cents {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  margin-bottom: 8px;
+}
+
+.tuner__status {
+  font-size: 0.95rem;
+  color: var(--color-text-dim);
+  min-height: 1.5em;
+}
+
+/* Controls */
+.tuner__controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tuner__start-btn {
+  font-size: 1rem;
+  padding: 12px 28px;
+}
+
+.tuner__ref-label {
+  font-size: 0.85rem;
+  color: var(--color-text-dim);
+  margin-left: 12px;
+}
+
+.tuner__ref-btn {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  min-width: 40px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .tuner__strings {
+    gap: 6px;
+  }
+  .tuner__string-btn {
+    padding: 8px 10px;
+    min-width: 46px;
+  }
+  .tuner__note {
+    font-size: 2.5rem;
+  }
+  .tuner__controls {
+    flex-direction: column;
+  }
+}

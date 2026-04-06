@@ -1,0 +1,178 @@
+/* === Chord Diagram Styles === */
+.chord-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.chord-box:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(233, 69, 96, 0.15);
+}
+
+.chord-box__name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-heading);
+  margin-bottom: 2px;
+}
+
+.chord-box__degrees {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5px;
+}
+
+.chord-box__svg {
+  width: 100%;
+  max-width: 120px;
+}
+
+/* SVG internal styles */
+.chord-svg__string { stroke: var(--color-text-dim); stroke-width: 1; }
+.chord-svg__fret { stroke: var(--color-text-dim); stroke-width: 1; }
+.chord-svg__nut { stroke: var(--color-text-heading); stroke-width: 3; }
+.chord-svg__dot { fill: var(--color-text-heading); }
+.chord-svg__dot--root { fill: var(--color-root); }
+.chord-svg__finger-text { fill: var(--bg-primary); font-size: 9px; font-weight: 700; text-anchor: middle; dominant-baseline: central; }
+.chord-svg__open { fill: none; stroke: var(--color-text-dim); stroke-width: 1.5; }
+.chord-svg__mute { stroke: var(--color-text-dim); stroke-width: 1.5; }
+.chord-svg__barre { fill: var(--color-text-heading); rx: 6; }
+.chord-svg__fret-label { fill: var(--color-text-dim); font-size: 10px; text-anchor: end; dominant-baseline: central; }
+
+/* === Fretboard / Scale Visualizer === */
+.fretboard-container {
+  overflow-x: auto;
+  margin: 24px 0;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.fretboard-svg {
+  min-width: 700px;
+}
+
+.fretboard-svg__string { stroke: var(--color-text-dim); }
+.fretboard-svg__string--thick { stroke-width: 2.5; }
+.fretboard-svg__string--thin { stroke-width: 1; }
+.fretboard-svg__fret { stroke: var(--color-border); stroke-width: 2; }
+.fretboard-svg__nut { stroke: var(--color-text-heading); stroke-width: 4; }
+.fretboard-svg__fret-num { fill: var(--color-text-dim); font-size: 11px; text-anchor: middle; }
+.fretboard-svg__inlay { fill: var(--color-border); opacity: 0.5; }
+
+.fretboard-svg__note {
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.fretboard-svg__note:hover {
+  filter: brightness(1.3);
+  transform-origin: center;
+}
+
+.fretboard-svg__note-circle { stroke: none; }
+.fretboard-svg__note-circle--root { fill: var(--color-root); }
+.fretboard-svg__note-circle--third { fill: var(--color-third); }
+.fretboard-svg__note-circle--fifth { fill: var(--color-fifth); }
+.fretboard-svg__note-circle--seventh { fill: var(--color-seventh); }
+.fretboard-svg__note-circle--other { fill: var(--color-text-dim); }
+
+.fretboard-svg__note-text {
+  fill: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+/* Legend */
+.fretboard-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.fretboard-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+}
+
+.fretboard-legend__dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.fretboard-legend__dot--root { background: var(--color-root); }
+.fretboard-legend__dot--third { background: var(--color-third); }
+.fretboard-legend__dot--fifth { background: var(--color-fifth); }
+.fretboard-legend__dot--seventh { background: var(--color-seventh); }
+.fretboard-legend__dot--other { background: var(--color-text-dim); }
+
+/* === Interactive Fretboard === */
+.fretboard-interactive {
+  margin: 24px 0;
+}
+
+.fretboard-interactive__controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.fretboard-interactive__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--color-text-dim);
+  font-weight: 600;
+}
+
+.fretboard-interactive__select {
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  font-family: var(--font-main);
+  cursor: pointer;
+}
+
+.fretboard-interactive__select:hover {
+  border-color: var(--color-text-dim);
+}
+
+.fretboard-interactive__select--wide {
+  min-width: 200px;
+}
+
+.fretboard-interactive__mode-btn {
+  font-size: 0.8rem;
+  padding: 5px 12px;
+  white-space: nowrap;
+}
+
+.fretboard-interactive__board {
+  transition: opacity 0.2s ease;
+}

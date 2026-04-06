@@ -1,0 +1,487 @@
+/* === Circle of Fifths Component === */
+.cof-container {
+  display: flex;
+  gap: 24px;
+  margin: 24px 0;
+  position: relative;
+}
+
+/* Side layout (default): wheel left, info right */
+.cof-container--side {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.cof-container--side .cof-info {
+  flex: 1;
+  min-width: 260px;
+}
+
+/* Bottom layout: wheel on top, info below */
+.cof-container--bottom {
+  flex-direction: column;
+  align-items: center;
+}
+
+.cof-container--bottom .cof-info {
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Layout toggle button */
+.cof-layout-toggle {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  z-index: 10;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--color-text-dim);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.cof-layout-toggle:hover {
+  background: var(--bg-card-hover);
+  color: var(--color-text);
+  border-color: var(--color-text-dim);
+}
+
+.cof-wrapper {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  max-width: 95vw;
+  max-height: 95vw;
+}
+
+.cof-svg {
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  overflow: visible;
+}
+
+/* === Rotating wheel === */
+.cof-wheel {
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.cof-wheel--dragging {
+  transition: none !important;
+}
+
+/* === Segments === */
+.cof-segment {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.cof-segment:hover .cof-segment__path {
+  filter: brightness(1.25);
+}
+
+.cof-segment__path--major {
+  fill: #0f2847;
+  stroke: var(--bg-primary);
+  stroke-width: 1.5;
+}
+
+.cof-segment__path--minor {
+  fill: #091a33;
+  stroke: var(--bg-primary);
+  stroke-width: 1.5;
+}
+
+.cof-segment__path--inner {
+  fill: #060f20;
+  stroke: var(--bg-primary);
+  stroke-width: 1;
+}
+
+/* === Text labels on wheel === */
+.cof-label {
+  font-family: var(--font-main);
+  font-weight: 700;
+  fill: var(--color-text-heading);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.cof-label--major {
+  font-size: 16px;
+}
+
+.cof-label--minor {
+  font-size: 11px;
+  fill: var(--color-text-dim);
+}
+
+.cof-label--signature {
+  font-size: 9px;
+  fill: #556677;
+}
+
+/* === FIXED window frame (does not rotate) === */
+
+/* Highlight arcs over diatonic segments */
+.cof-frame__arc--diatonic {
+  fill: rgba(233, 69, 96, 0.12);
+  stroke: none;
+  pointer-events: none;
+}
+
+.cof-frame__arc--tonic {
+  fill: rgba(233, 69, 96, 0.28);
+  stroke: none;
+  pointer-events: none;
+}
+
+/* Minor chord highlight (ii, vi, iii) */
+.cof-frame__arc--minor-active {
+  fill: rgba(79, 172, 254, 0.18);
+  stroke: none;
+  pointer-events: none;
+}
+
+/* Unified frame border — single closed band from R_INNER to R_OUTER */
+.cof-frame__border {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  pointer-events: none;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+}
+
+/* Degree labels INSIDE cells (top-left corner) */
+.cof-frame__degree-inset {
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: 800;
+  fill: var(--color-accent);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+.cof-frame__degree-inset--tonic {
+  font-size: 16px;
+  fill: var(--color-primary);
+  filter: drop-shadow(0 0 3px rgba(233, 69, 96, 0.5));
+}
+
+.cof-frame__degree-inset--minor {
+  fill: var(--color-accent);
+  font-size: 13px;
+}
+
+/* Degree labels OUTSIDE the wheel (for vii° etc) */
+.cof-frame__degree {
+  font-family: var(--font-main);
+  font-size: 18px;
+  font-weight: 800;
+  fill: var(--color-accent);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+/* Roman numeral labels (further outside) */
+.cof-frame__roman {
+  font-family: var(--font-main);
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--color-text-dim);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+/* Tonic indicator arrow */
+.cof-indicator {
+  fill: var(--color-primary);
+  filter: drop-shadow(0 2px 6px rgba(233, 69, 96, 0.6));
+}
+
+/* === Center circle === */
+.cof-center {
+  fill: var(--bg-primary);
+  stroke: var(--color-border);
+  stroke-width: 2;
+}
+
+.cof-center-text {
+  font-family: var(--font-main);
+  font-size: 22px;
+  font-weight: 800;
+  fill: var(--color-text-heading);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.cof-center-subtext {
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--color-text-dim);
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* === Info Panel === */
+.cof-info {
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  width: 100%;
+  max-width: 500px;
+  min-height: 100px;
+}
+
+.cof-info__key {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-text-heading);
+  margin-bottom: 2px;
+}
+
+.cof-info__signature {
+  font-size: 0.85rem;
+  color: var(--color-accent);
+  margin-bottom: 14px;
+}
+
+.cof-info__section-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-dim);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Chord cells in info panel — grid of degree cards */
+.cof-info__chords-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.cof-info__chord-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  background: var(--bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  min-width: 52px;
+  flex: 1;
+}
+
+.cof-info__chord-cell--tonic {
+  border-color: var(--color-primary);
+  background: rgba(233, 69, 96, 0.1);
+}
+
+.cof-info__chord-cell--minor {
+  border-color: var(--color-accent);
+  background: rgba(245, 197, 24, 0.08);
+}
+
+.cof-info__chord-cell--minor .cof-info__chord-degree {
+  color: var(--color-accent);
+}
+
+.cof-info__chord-degree {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+.cof-info__chord-cell--tonic .cof-info__chord-degree {
+  color: var(--color-primary);
+}
+
+.cof-info__chord-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-heading);
+}
+
+.cof-info__chord-roman {
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+}
+
+/* Legacy rows */
+.cof-info__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.9rem;
+}
+
+.cof-info__row:last-child {
+  border-bottom: none;
+}
+
+.cof-info__label {
+  color: var(--color-text-dim);
+}
+
+.cof-info__value {
+  color: var(--color-text-heading);
+  font-weight: 600;
+}
+
+/* === Progression Path Overlay === */
+.cof-path-line {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 8 4;
+  opacity: 0.85;
+}
+
+.cof-path-arrow {
+  fill: var(--color-accent);
+}
+
+.cof-path-dot {
+  fill: var(--color-primary);
+  stroke: #fff;
+  stroke-width: 2;
+}
+
+.cof-path-num {
+  font-family: var(--font-main);
+  font-size: 9px;
+  font-weight: 700;
+  fill: #fff;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+/* === Transposition Panel === */
+.cof-transpose-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.cof-transpose-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.cof-transpose-panel__title {
+  font-weight: 700;
+  color: var(--color-text-heading);
+}
+
+.cof-mapping-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cof-mapping-table th,
+.cof-mapping-table td {
+  padding: 8px 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.85rem;
+}
+
+.cof-mapping-table th {
+  color: var(--color-text-dim);
+  font-weight: 600;
+}
+
+.cof-mapping-table .from-chord {
+  color: var(--color-text);
+}
+
+.cof-mapping-table .to-chord {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+/* === Capo selector === */
+.cof-capo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.cof-capo__label {
+  font-size: 0.85rem;
+  color: var(--color-text-dim);
+}
+
+.cof-capo__select {
+  background: var(--bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text);
+  padding: 4px 8px;
+  font-size: 0.85rem;
+  font-family: var(--font-main);
+}
+
+/* === Responsive === */
+@media (max-width: 900px) {
+  /* Force bottom layout on narrower screens */
+  .cof-container--side {
+    flex-direction: column;
+    align-items: center;
+  }
+  .cof-container--side .cof-info {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cof-wrapper {
+    width: 360px;
+    height: 360px;
+  }
+
+  .cof-label--major { font-size: 13px; }
+  .cof-label--minor { font-size: 9px; }
+  .cof-label--signature { font-size: 8px; }
+  .cof-frame__degree-inset { font-size: 11px; }
+  .cof-frame__degree { font-size: 14px; }
+  .cof-frame__roman { font-size: 8px; }
+
+  .cof-info__chords-row {
+    gap: 4px;
+  }
+  .cof-info__chord-cell {
+    min-width: 40px;
+    padding: 4px 5px;
+  }
+}
